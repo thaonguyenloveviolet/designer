@@ -1,4 +1,5 @@
 <!--
+@license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -8,7 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../iron-pages/iron-pages.html">
+<link rel="import" href="../../../paper-tabs/paper-tabs.html">
 
+<link rel="import" href="designer-inspector-behavior.html">
 <link rel="import" href="designer-style-inspector.html">
 <link rel="import" href="designer-property-inspector.html">
 
@@ -30,40 +34,28 @@ Inspects an element and provides tidbits about its properties, styles, and more.
   </style>
 
   <template>
-    <designer-style-inspector
-        source-document="{{sourceDocument}}"
-        element-info="{{elementInfo}}"></designer-style-inspector>
-    <designer-property-inspector
-        element-info="{{elementInfo}}"></designer-property-inspector>
-<!--         <div>{{_dumpedState}}</div> -->
+    <paper-tabs selected="{{selectedPanelIndex}}">
+      <paper-tab>Properties</paper-tab>
+      <paper-tab>Styles</paper-tab>
+    </paper-tabs>
+    <iron-pages selected="[[selectedPanelIndex]]">
+      <designer-property-inspector element-info="[[elementInfo]]" source-docuemnt=[[source-document]]></designer-property-inspector>
+      <designer-style-inspector element-info="[[elementInfo]]" source-document=[[source-document]]></designer-style-inspector>
+    </iron-pages>
   </template>
 
 </dom-module>
 
 <script>
+  'use strict';
 
   Polymer({
 
     is: 'designer-inspector',
 
-    properties: {
-
-      /**
-       * Metadata published by the stage about the currently selected element.
-       */
-      'elementInfo': {
-        type:      Object,
-        observer: '_elementInfoChanged',
-      },
-
-      /** The document where edits should be made */
-      'sourceDocument': Object,
-
-    },
-
-    _elementInfoChanged() {
-      this._dumpedState = JSON.stringify(this.elementInfo, null, 1);
-    },
+    behaviors: [
+      Polymer.DesignerInspectorBehavior
+    ],
 
   });
 

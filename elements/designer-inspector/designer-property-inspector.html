@@ -8,73 +8,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="designer-inspector-behavior.html">
 
-<!--
-Displays the style rules that currently apply to `element`, and provides an
-editing interface for them.
--->
 <dom-module id="designer-property-inspector">
-
   <style>
-    :host {
-      box-sizing: border-box;
-      display: block;
-      padding: 0 10px;
-    }
-
-    div {
-      margin: 10px 0;
-    }
   </style>
-
   <template>
-    <div hidden="{{_hide}}">
-      <header>Properties</header>
-        <template is="dom-repeat" items="{{_properties}}">
-          <section>
-            <span>{{item.name}}</span> | <span>{{item.type}}</span>
-          </section>
-        </template>
-      </div>
+    <span>Properties</span>
   </template>
+  <script>
+    'use strict';
 
+    Polymer({
+
+      is: 'designer-property-inspector',
+
+      behaviors: [
+        Polymer.DesignerInspectorBehavior
+      ],
+
+    });
+
+  </script>
 </dom-module>
 
-<script>
-'use strict';
 
-Polymer({
-
-  is: 'designer-property-inspector',
-
-  properties: {
-
-    /**
-     * Metadata published by the stage about the currently selected element.
-     */
-    elementInfo: {
-      type:      Object,
-      observer: '_elementInfoChanged',
-    },
-
-  },
-
-  attached: function(){
-    this._hide = true;
-  },
-
-  _elementInfoChanged() {
-    this._properties = (this.elementInfo &&
-                         this.elementInfo.analyzed &&
-                         this.elementInfo.analyzed.properties) || [];
-    if (this._properties.length == 0) {
-      this._hide = true;
-    } else {
-      this._hide = false;
-    }
-  },
-
-
-});
-
-</script>
