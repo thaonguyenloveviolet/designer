@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../../polymer/polymer.html">
 <link rel="import" href="../../../iron-pages/iron-pages.html">
 <link rel="import" href="../../../paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../paper-styles/paper-styles.html">
 
 <link rel="import" href="designer-inspector-behavior.html">
 <link rel="import" href="designer-style-inspector.html">
@@ -23,10 +24,20 @@ Inspects an element and provides tidbits about its properties, styles, and more.
 
   <style>
     :host {
+      @apply(--layout);
+      @apply(--layout-vertical);
+      @apply(--layout-flex);
+
+      background: var(--designer-background-primary-color, --paper-grey-900);
       box-sizing: border-box;
       display: block;
       overflow: auto;
+
+      --paper-tab-content: {
+        color: var(--designer-primary-color, --paper-grey-400);
+      };
     }
+
     .dumped-state {
       font-size: 0.7em;
       overflow: hidden;
